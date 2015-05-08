@@ -1,9 +1,9 @@
 /*
 	Written by Calum Grant
 	Copyright (C) Calum Grant 2007
+	Copyright (C) r-lyeh 2015
 
-	Home page: http://calumgrant.net/units
-	File location: http://calumgrant.net/units/units.hpp
+	Home page: http://github.com/r-lyeh/units
 
 	Copying permitted under the terms of the Boost software license.
 
@@ -25,6 +25,7 @@
 
 #include <cmath>
 
+#define UNITS_VERSION "v1.0.0"
 
 namespace units
 {
