@@ -3,8 +3,8 @@
 A C++ library to provide numerical quantities with units.  This catches many programming errors and provides implicit conversion between compatible quantities.
 
 # Download
-- Latest version: units.hpp
-- Manual: units.html
+- Latest version: [units.hpp](units.hpp)
+- Manual: [units.html](https://github.com/r-lyeh/units)
 - Home page: http://calumgrant.net/units (unavailable)
 - License: Boost Software License.
 
@@ -17,20 +17,31 @@ Arithmetic respects units, so you can only add compatible quantities (of the sam
 
 # Example
 ```c++
-#include "units.hpp"
 #include <iostream>
+#include "units.hpp"
 int main() {
     using namespace units::values;
+
     std::cout << "One mile is " << km(mile(1)) << std::endl;
     // Output: One mile is 1.60934 km
 
-    std::cout << "Flow rate is " << m3(mile(1)*inch(80)*foot(9))/s(minute(5));
+    std::cout << "Flow rate is " << m3(mile(1)*inch(80)*foot(9))/s(minute(5)) << std::endl;
     // Output: Flow rate is 29.9026 (m)^3.(s)^-1
 
     hour h;
-    //h = cm(3);  // Compile-time error: incompatible units
-    //h = 4;      // Compile-time error: 4 of what?
+    //h = cm(3); // Compile-time error: incompatible units
+    //h = 4;     // Compile-time error: 4 of what?
+    h = day(4);  // Ok: h is 96 hours
     std::cout << "4 days is " << h << std::endl; // Ok: h is 96 hours
+
+    // information
+    byte size(16384);
+    std::cout << "16384 bytes is " << (size) << std::endl;
+    std::cout << "16384 bytes is " << KiB(size) << std::endl;
+
+    // bandwidth / transfer rate
+    std::cout << "1 megabyte is " << KiB(MiB(1)) << std::endl;
+    std::cout << "transfer rate is " << MiBps( MiB(10) / s(5) ) << std::endl;    
 }
 ```
 
@@ -75,7 +86,7 @@ quantities:
 
 - No unit: *unit, percent, dozen, bakers_dozen*
 - Mass: *kg, g, mg, lb, oz, tonne*
-- Time: *s, ms, minute, hour, day, week*
+- Time: *s, ms, ns, us, minute, hour, day, week*
 - Calendar: *month, year, century, millennium*
 - Distance: *m, cm, mm, km, inch, foot, yard, mile, nautical_mile*
 - Temperature: *K, Celsius, Fahrenheit*
@@ -87,6 +98,8 @@ quantities:
 - Volume: *cm3, ml, cl, liter, dl, m3*
 - Velocity: *mph, kph, meters_per_second, knot, mach*
 - Angle: *rad, degree, grad, degree_minute, degree_second*
+- Information: *byte, KiB, MiB, GiB, TiB, PiB*
+- Bandwidth: *bps, KiBps, MiBps, GiBps, TiBps, PiBps*
 - Other units: *A, mol, cd, rad, sr, Hz, C, V, F, Ohm, S, Wb, T, H, lm, lx, Bq, Gy, Sv, kat, rpm*
 
 
@@ -291,3 +304,10 @@ typedef units::compose< units::units::m, units::pow<units::units::s, -1> > meter
 ```
 
 The conversion operators are able to analyse the type of the unit and generate a conversion function automatically!
+
+## Changelog
+- v1.1.0
+   - Binary SI units for information (byte, KiB, MiB, GiB, TiB, PiB) (@r-lyeh)
+   - Binary SI units for bandwidth (bps, KiBps, MiBps, GiBps, TiBps, PiBps) (@r-lyeh)
+- v1.0.0
+  - Initial commit (Calum Grant)
